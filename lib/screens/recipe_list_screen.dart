@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/recipes.dart';
 import 'recipe_detail_screen.dart';
+import 'cat_fact_screen.dart';
 
 class RecipeListScreen extends StatelessWidget {
   const RecipeListScreen({super.key});
@@ -10,14 +11,29 @@ class RecipeListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Recipes')),
       body: ListView.builder(
-        itemCount: recipes.length,
+        itemCount: recipes.length + 1,
         itemBuilder: (context, index) {
+          if (index == recipes.length) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CatFactScreen(),
+                    ),
+                  );
+                },
+                child: const Text('Get a Cat Fact'),
+              ),
+            );
+          }
           final recipe = recipes[index];
           return Card(
             child: ListTile(
               leading: ClipRRect(
-                borderRadius:
-                    BorderRadius.circular(8.0), // Add the border radius
+                borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
                   recipe.imageUrl,
                   width: 50,
